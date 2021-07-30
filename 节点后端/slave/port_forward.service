@@ -1,0 +1,11 @@
+[Unit]
+Description=port_forward
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/bash /usr/local/bin/port_forward.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

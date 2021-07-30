@@ -1,0 +1,34 @@
+<p>
+    原插件由jiuling编写，此版本由Виктор修复
+</p>
+<p>
+<ul>
+    <li>
+        <strong>iptables转发支持ddns</strong>
+    </li>
+    <li>
+        <strong>增加了Brook转发</strong>
+    </li>
+    <li>
+        <strong>增加了Tinymapper转发</strong>
+    </li>
+</ul>
+在实际测试中，推荐使用iptables作为中转方法，因为iptables作为内核级别的程序，相对资源占用较少也更稳定，唯一不足的是，其不经由BBR类程序；使用Brook作为中转方法时，每个中转规则大约占用10M内存，且在统计流量或增加规则时非常消耗CPU资源。
+</p>
+
+<p>
+    如果需要禁用用户提交Brook中转规则，可在modules/servers/portForwardServer/overview.tpl文件中删除以下内容，大约在第228行
+</p>
+
+<p>
+<pre class="prettyprint lang-html">&lt;option value="method2"&gt;Brook&lt;/option&gt;</pre>
+另外，欢迎加入<a href="https://t.me/whmcsCN" target="_blank">WHMCS交流群</a>
+</p>
+
+<p>
+    https://t.me/whmcsCN
+</p>
+
+<script type="text/javascript">
+    var page = "about";
+</script>

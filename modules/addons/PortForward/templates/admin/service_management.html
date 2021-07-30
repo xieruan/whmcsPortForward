@@ -1,0 +1,150 @@
+<div class="service-body">
+    <div class="loading">
+        <h1 style="text-align:center;color: #8f8f8f;font-weight: 500;font-size: 48px">
+            <i class="fa fa-refresh fa-spin"></i> 请稍后 , 正在加载数据
+        </h1>
+    </div>
+    <div class="service row" style="display:none">
+        <div class="noservice alert alert-warning" role="alert" style="display:none">
+            尚无已存在服务。
+        </div>
+        <div class="servicelist" style="display:none">
+            <table class="table">
+                <thead>
+                <tr>
+                    
+                    <th>服务ID</th>
+                    <th>所属客户邮箱</th>
+                    <th>节点ID</th>
+                    <th>服务限制带宽</th>
+                    <th>流量使用状况</th>
+                    <th>到期时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var edit_service = function(obj){
+        var service = $(obj).parents("tr");
+        var serviceid = service.data("id");
+        $.confirm({
+            title: '修改服务信息',
+            content: '' +
+                '<form action="" class="formName">' +
+                '<div class="form-group">' +
+                '<label>修改 #'+ service.find("td:eq(0)").html() + '号服务 信息</label>' +
+                '<input type="text" placeholder="输入总流量(MB),留空则不改变" class="traffic form-control" name="traffic_all" value="" required />' +
+                '<input type="text" placeholder="输入限速值(Mbps),留空则不改变" class="traffic form-control" name="speedlimit" value="" required />' +
+                '</div>' +
+                '</form>',
+            buttons: {
+                formSubmit: {
+                    text: '提交',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        var traffic = this.$content.find('[name=traffic_all]').val();
+                        var speedlimit = this.$content.find('[name=speedlimit]').val();
+
+                        $.confirm({
+                            content: function () {
+                                var self = this;
+                                return $.ajax({
+                                    url: 'addonmodules.php?module=PortForward&ajax=true&action=update_service_info&serviceid=' + service.find("td:eq(0)").html() + '&traffic_all=' + traffic + '&speedlimit=' + speedlimit,
+                                    dataType: 'json',
+                                }).done(function (response) {
+                                    if (response.result == "success"){
+                                        self.setType('green')
+                                        self.setTitle('更新完成');
+                                        self.setContent('服务信息已更新');
+                                        load_service()
+                                    } else {
+                                        self.setType('red')
+                                        self.setTitle('错误');
+                                        self.setContent(response.error);
+                                    }
+
+                                }).fail(function(){
+                                    self.setType('red')
+                                    self.setTitle('错误');
+                                    self.setContent('与服务器通讯时出现错误, 请重试.');
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                }
+            },
+            onContentReady: function () {
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click');
+                });
+            }
+        });
+    }
+
+    var load_service = function(){
+        $(".loading").show();
+        $(".service.row").hide();
+
+        $.ajax({
+            url: "addonmodules.php?module=PortForward&ajax=true&action=get_service",
+            dateType: "json"
+        }).done(function(response){
+            $(".loading").hide();
+            $(".service.row").show();
+            if (response.result == "success"){
+                if (response.data.length == 0){
+                    $(".service .noservice").show();
+                } else {
+                    $(".service .servicelist").show();
+                    services = response.data;
+                    for (service in services){
+                        if ($("tr[data-productgroup='default'").length == 0){
+                            $(".servicelist table tbody").append('<tr data-productgroup="default"><td colspan="8" style="width: 96%; background-color:#f3f3f3;"><div class="prodGroup" align="left">&nbsp;&nbsp;<strong>服务组:default</strong><span></span></div></td></tr>');
+                        }
+                        html = '<tr data-id="' + services[service].id + '"><td>' + services[service].serviceid + '</td>';
+                        html += '<td><a href="./clientssummary.php?userid='+services[service].uid+'">'+  services[service].useremail + '</a></td>';
+                        html += '<td>' + services[service].node_ids + '</td>';
+                        html += '<td>' + services[service].bandwidth + ' Mbps</td>';
+                        html += '<td>' + services[service].traffic_used + ' / ' + services[service].traffic_all + ' MB</td>';
+                        html += '<td>' + services[service].nextduedate + '</td>';
+                        if (services[service].status == "enabled"){
+                            html += '<td><span class="label label-success">已启用</span>';
+                        } else {
+                            html += '<td><span class="label label-warning">未启用</span>';
+                        }
+                        html += '</td>';
+
+                        html += '<td><a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="edit_service(this)">修改服务信息</a>';
+
+                        html += '</td>'
+
+                        html += '</tr>';
+                        $("tr[data-productgroup='default'").after(html);
+
+                    }
+                }
+            }
+        }).fail(function(){
+            $(".loading h1").html('<i class="fa fa-times" aria-hidden="true"></i> 加载数据错误, 请刷新重试');
+        })
+    }
+
+    load_service()
+</script>
+
+<script type="text/javascript">
+    var page = "service_management";
+</script>

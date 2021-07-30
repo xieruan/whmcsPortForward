@@ -1,0 +1,208 @@
+<div class="node-body">
+    <div class="loading">
+        <h1 style="text-align:center;color: #8f8f8f;font-weight: 500;font-size: 48px">
+            <i class="fa fa-refresh fa-spin"></i> 请稍后 , 正在加载数据
+        </h1>
+    </div>
+    <div class="node row" style="display:none">
+        <div class="nonode alert alert-warning" role="alert" style="display:none">
+            尚未添加节点 , 请部署后运行一次。
+        </div>
+        <div class="nodelist" style="display:none">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>节点ID</th>
+                        <th>节点名</th>
+                        <th>节点状态</th>
+                        <th>节点IP</th>
+                        <th>CNAME</th>
+                        <th>端口范围</th>
+                        <th>最后在线时间</th>
+                        <th>修改</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var fqdn_mather = /^(?!:\/\/)(?!.{256,})(([a-z0-9][a-z0-9_-]*?)|([a-z0-9][a-z0-9_-]*?\.)+?[a-z]{2,6}?)$/i;
+    var edit_node = function (obj) {
+        var node = $(obj).parents("tr");
+        var nodeid = node.data("id");
+        $.confirm({
+            title: '修改节点信息',
+            content: '' +
+                '<form action="" class="formName">' +
+                '<div class="form-group">' +
+                '<label>修改节点 #' + node.find("td:eq(0)").html() + ' 信息</label>' +
+                '<input type="text" placeholder="输入节点名,如是NAT-VPS,可带上端口范围" class="name form-control" value="' + node.find("td:eq(1)").html() + '" required />' +
+                '<input type="text" placeholder="输入指向的CNAME" class="cname form-control" value="' + node.find("td:eq(4)").html() + '" required />' +
+                '<input type="text" placeholder="输入端口范围,例如 20010-30010" class="portrange form-control" value="' + node.find("td:eq(5)").html() + '" required />' +
+                '</div>' +
+                '</form>',
+            buttons: {
+                formSubmit: {
+                    text: '提交',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        var cname = this.$content.find('.cname').val();
+                        var name = this.$content.find('.name').val();
+                        var portrange = this.$content.find('.portrange').val();
+                        if (!cname || !fqdn_mather.test(cname)) {
+                            $.alert('请提供有效的CNAME');
+                            return false;
+                        }
+
+
+                        $.confirm({
+                            content: function () {
+                                var self = this;
+                                return $.ajax({
+                                    url: 'addonmodules.php?module=PortForward&ajax=true&action=update_node_info&nodeid=' + nodeid + '&cname=' + cname + '&name=' + name + '&portrange=' + portrange,
+                                    dataType: 'json',
+                                }).done(function (response) {
+                                    if (response.result == "success") {
+                                        self.setType('green')
+                                        self.setTitle('更新完成');
+                                        self.setContent('节点信息已更新');
+                                        node.find("td:eq(4)").html(cname)
+                                        node.find("td:eq(1)").html(name)
+                                        node.find("td:eq(5)").html(portrange)
+                                    } else {
+                                        self.setType('red')
+                                        self.setTitle('错误');
+                                        self.setContent(response.error);
+                                    }
+
+                                }).fail(function () {
+                                    self.setType('red')
+                                    self.setTitle('错误');
+                                    self.setContent('与服务器通讯时出现错误, 请重试.');
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                }
+            },
+            onContentReady: function () {
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click');
+                });
+            }
+        });
+    }
+
+    var forced_delete_node = function (obj) {
+        var node = $(obj).parents("tr");
+        var nodeid = node.data("id");
+
+        $.confirm({
+            title: '确认删除 ' + node.data("id") + ' 号节点?',
+            content: '请确保此节点已经完全弃用且被控已经完全不运行，若此节点中的被控运行节点会重新出现，并被分配到一个新的id号！',
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        $.confirm({
+                            content: function () {
+                                var self = this;
+                                return $.ajax({
+                                    url: 'addonmodules.php?module=PortForward&ajax=true&action=forced_delete_node&nodeid=' + nodeid,
+                                    dataType: 'json',
+                                }).done(function (response) {
+                                    if (response.result == "success") {
+                                        self.setType('green')
+                                        self.setTitle('成功');
+                                        self.setContent('删除成功');
+                                    } else {
+                                        self.setType('red')
+                                        self.setTitle('错误');
+                                        self.setContent(response.error);
+                                    }
+
+                                }).fail(function () {
+                                    self.setType('red')
+                                    self.setTitle('错误');
+                                    self.setContent('与服务器通讯时出现错误, 请重试.');
+                                });
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: "取消"
+                },
+            }
+        });
+    }
+
+    var load_node = function () {
+        $(".loading").show();
+        $(".node.row").hide();
+        $.ajax({
+            url: "addonmodules.php?module=PortForward&ajax=true&action=get_node",
+            dateType: "json"
+        }).done(function (response) {
+            $(".loading").hide();
+            $(".node.row").show();
+            if (response.result == "success") {
+                if (response.node.length == 0) {
+                    $(".node .nonode").show();
+                } else {
+                    $(".node .nodelist").show();
+                    nodes = response.node;
+                    for (node in nodes) {
+                        if ($("tr[data-productgroup='" + nodes[node].groupname + "'").length == 0) {
+                            $(".nodelist table tbody").append('<tr data-productgroup="' + nodes[node].groupname + '"><td colspan="8" style="width: 96%; background-color:#f3f3f3;"><div class="prodGroup" align="left">&nbsp;&nbsp;<strong>节点组:' + nodes[node].groupname + '</strong><span></span></div></td></tr>');
+                        }
+                        html = '<tr data-id="' + nodes[node].id + '"><td>' + nodes[node].id + '</td><td>' + nodes[node].name + '</td>';
+                        if (nodes[node].status == "enabled") {
+                            html += '<td><span class="label label-success">已启用</span>';
+                        } else {
+                            html += '<td><span class="label label-warning">未启用</span>';
+                        }
+
+                        html += '</td>';
+
+                        html += '<td>' + nodes[node].remoteip + '</td>';
+                        html += '<td>' + nodes[node].cname + '</td>';
+                        html += '<td>' + nodes[node].portrange + '</td>';
+                        html += '<td>' + new Date(parseInt(nodes[node].last_online_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ') + '</td>';
+
+                        if (nodes[node].status) {
+                            html += '<td><a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="edit_node(this)">修改信息</a>';
+                            html += '<td><a class="btn btn-primary btn-xs" href="javascript:void(0)" onclick="forced_delete_node(this)">强制删除节点</a>';
+                        }
+
+                        html += '</td>'
+
+                        html += '</tr>';
+                        $("tr[data-productgroup='" + nodes[node].groupname + "'").after(html);
+
+                    }
+                }
+            }
+        }).fail(function () {
+            $(".loading h1").html('<i class="fa fa-times" aria-hidden="true"></i> 加载数据错误, 请刷新重试');
+        })
+    }
+
+    load_node()
+</script>
+
+<script type="text/javascript">
+    var page = "node_management";
+</script>
