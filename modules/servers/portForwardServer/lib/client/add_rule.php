@@ -134,6 +134,12 @@ return function ($data) {
         case 'method4':
             $data['method'] = 'gost';
             break;
+        case 'method5':
+            $data['method'] = 'realm';
+            break;
+        case 'method6':
+            $data['method'] = 'ehco';
+            break;
         default:
             $data['method'] = 'iptables';
             break;
