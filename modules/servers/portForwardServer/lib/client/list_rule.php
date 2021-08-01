@@ -65,6 +65,12 @@ return function ($data) {
                     case "gost":
                         $rules->method = 'Gost';
                         break;
+                    case "realm":
+                        $rules->method = 'realm';
+                        break;
+                    case "ehco":
+                        $rules->method = 'ehco';
+                        break;
                     default:
                         $rules->method = '未知';
                         break;

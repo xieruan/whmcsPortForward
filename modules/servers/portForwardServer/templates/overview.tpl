@@ -233,7 +233,7 @@ var load_rules = function(obj){
 					'&nbsp;' + 
 					'<input type="number" class="form-control" name="pub_port" min="1" max="65535" placeholder="转发端口"></div></div>' +
 					'<div class="form-group"><label>转发节点</label><select name="pub_node" class="form-control">' + html + '</select></div>' +
-					'<div class="form-group"><label>转发程序</label><select name="method" class="form-control"><option value="method1">iptables</option><option value="method2">Brook</option><option value="method3">TinyMapper</option><option value="method4">Gost</option></select></div>' +
+					'<div class="form-group"><label>转发程序</label><select name="method" class="form-control"><option value="method1">iptables</option><option value="method2">Brook</option><option value="method3">TinyMapper</option><option value="method4">Gost</option><option value="method5">realm</option><option value="method6">ehco</option></select></div>' +
 					'</form>',
                 buttons: {
                     formSubmit: {
