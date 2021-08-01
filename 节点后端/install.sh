@@ -58,7 +58,7 @@ Install() {
 		systemctl disable firewalld
 		echo -e " ${Tip} 安装主程序..."
 		mkdir /usr/local/PortForward
-		mv slave.zip /usr/local/PortForward/
+		wget https://github.com/xieruan/whmcsPortForward/releases/download/1.0.1/slave.zip -O /usr/local/PortForward/slave.zip
 		cd /usr/local/PortForward/
 		unzip slave.zip
 		chmod +x -R slave
