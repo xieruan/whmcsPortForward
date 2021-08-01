@@ -57,26 +57,26 @@ Install() {
 		systemctl disable firewalld
 		echo -e " ${Tip} 安装主程序..."
 		mkdir /usr/local/PortForward
-		wget https://mirror.ghproxy.com/https://github.com/xieruan/whmcsPortForward/releases/download/1.0.1/slavec.zip -O /usr/local/PortForward/slavec.zip
+		wget https://mirror.ghproxy.com/https://github.com/xieruan/whmcsPortForward/releases/download/1.0.1/slavec.zip -O /usr/local/PortForward/slave.zip
 		cd /usr/local/PortForward/
-		unzip slavec.zip
-		chmod +x -R slavec
+		unzip slave.zip
+		chmod +x -R slave
 		echo -e " ${Tip} 安装完成，添加systemd守护..."
-		mv /usr/local/PortForward/slavec/port_forward.sh /usr/local/bin/port_forward.sh
-		mv /usr/local/PortForward/slavec/port_forward.service /etc/systemd/system/port_forward.service
+		mv /usr/local/PortForward/slave/port_forward.sh /usr/local/bin/port_forward.sh
+		mv /usr/local/PortForward/slave/port_forward.service /etc/systemd/system/port_forward.service
 		systemctl daemon-reload
 		systemctl enable port_forward
 		echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
 		sysctl -p
 		echo -e " ${Tip} All Done" 
-		echo -e " ${Tip} 如果这是一个新节点，请编辑 /usr/local/PortForward/slavec/config.php，"
-		echo -e " ${Tip} 然后手动运行一次 php /usr/local/PortForward/slavec/Port_Checker.php，"
+		echo -e " ${Tip} 如果这是一个新节点，请编辑 /usr/local/PortForward/slave/config.php，"
+		echo -e " ${Tip} 然后手动运行一次 php /usr/local/PortForward/slave/Port_Checker.php，"
 		echo -e " ${Tip} 运行完后检查config.php中的token是否与数据库对应 然后重启此被控服务器，"
 		echo -e " ${Tip} 然后重启此被控服务器"
 
-		echo -e " ${Tip} 如果这是一个重装的的节点，请编辑 /usr/local/PortForward/slavec/config.php，"
+		echo -e " ${Tip} 如果这是一个重装的的节点，请编辑 /usr/local/PortForward/slave/config.php，"
 		echo -e " ${Tip} 将token设置为之前的token和并编辑其他信息，"
-		echo -e " ${Tip} 然后手动运行一次 php /usr/local/PortForward/slavec/Port_Checker.php,"
+		echo -e " ${Tip} 然后手动运行一次 php /usr/local/PortForward/slave/Port_Checker.php,"
 		echo -e " ${Tip} 然后重启此被控服务器" && exit
 	fi
 	echo -e " ${Error} 暂不支持，敬请期待。"
@@ -89,7 +89,7 @@ check_sys
   -- By Jiuling --
  ${Green_font_prefix}1.${Font_color_suffix} 安装程序及依赖
 " && echo
-if [[ -e  /usr/local/PortForward/slavec/init.php ]]; then
+if [[ -e  /usr/local/PortForward/slave/init.php ]]; then
 	echo -e " 当前状态: 被控 ${Green_font_prefix}已安装${Font_color_suffix}"
 else
 	echo -e " 当前状态: 被控 ${Red_font_prefix}未安装${Font_color_suffix}"
