@@ -66,10 +66,10 @@ return function ($data) {
                         $rules->method = 'Gost';
                         break;
                     case "realm":
-                        $rules->method = 'realm';
+                        $rules->method = 'Realm';
                         break;
                     case "ehco":
-                        $rules->method = 'ehco';
+                        $rules->method = 'Ehco';
                         break;
                     default:
                         $rules->method = '未知';
