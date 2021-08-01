@@ -9,6 +9,7 @@ whmcs交流群毛子哥修改的。
 ```
 bash <(curl -Ls https://mirror.ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installx.sh)
 ```
+ehco隧道入口
 ```
 bash <(curl -Ls https://mirror.ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installc.sh)
 ```
