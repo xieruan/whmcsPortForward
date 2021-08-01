@@ -6,4 +6,6 @@ whmcs交流群毛子哥修改的。
 
 
 安装后端
-
+```
+bash <(curl -Ls https://mirror.ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installx.sh)
+```
