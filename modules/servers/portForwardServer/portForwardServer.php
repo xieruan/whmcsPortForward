@@ -14,7 +14,7 @@ function portForwardServer_MetaData()
     return array(
         'DisplayName' => 'PortForward',
         'APIVersion' => '1.1',
-        'RequiresServer' => false,
+        'RequiresServer' => true,
     );
 }
 
