@@ -37,6 +37,7 @@ Install() {
 		cat /etc/redhat-release |grep 7\..*|grep -i centos>/dev/null
 		if [[ $? = 1 ]]; then
 			echo -e " ${Error} 不支持Centos6/8，请更换Centos 7 x64" && exit 1 
+		fi
 		echo -e " ${Tip} 正在安装php7.0..."
 		rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 		rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
