@@ -14,3 +14,7 @@ ehco隧道入口
 bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installc.sh)
 ```
 
+bbr
+```
+bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/tcpx.sh)
+```
