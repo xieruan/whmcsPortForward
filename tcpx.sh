@@ -388,8 +388,8 @@ installxanmod(){
 #安装bbrplus 新内核
 #2021.3.15 开始由https://mirror.ghproxy.com/https://github.com/UJX6N/bbrplus-5.10 替换bbrplusnew
 installbbrplusnew(){
-	github_ver_plus=$(curl -s https://mirror.ghproxy.com/https://github.com/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $6}' | awk -F "[>]" '{print $2}' | awk -F "[<]" '{print $1}')
-	github_ver_plus_num=$(curl -s https://mirror.ghproxy.com/https://github.com/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $6}' | awk -F "[>]" '{print $2}' | awk -F "[<]" '{print $1}' | awk -F "[-]" '{print $1}')
+	github_ver_plus=$(curl -s https://github.com/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $6}' | awk -F "[>]" '{print $2}' | awk -F "[<]" '{print $1}')
+	github_ver_plus_num=$(curl -s https://github.com/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $6}' | awk -F "[>]" '{print $2}' | awk -F "[<]" '{print $1}' | awk -F "[-]" '{print $1}')
 	echo -e "获取的UJX6N的bbrplus-5.10版本号为:${github_ver_plus}"
 	echo -e "如果下载地址出错，可能当前UJX6N正在更新，超过半天还是出错请反馈"
 	# checkurl $github_ver_plus
