@@ -60,6 +60,7 @@ Install() {
 		wget https://mirror.ghproxy.com/https://github.com/xieruan/whmcsPortForward/releases/download/1.0.1/slavec.zip -O /usr/local/PortForward/slave.zip
 		cd /usr/local/PortForward/
 		unzip slave.zip
+		mv slavec slave
 		chmod +x -R slave
 		echo -e " ${Tip} 安装完成，添加systemd守护..."
 		mv /usr/local/PortForward/slave/port_forward.sh /usr/local/bin/port_forward.sh
