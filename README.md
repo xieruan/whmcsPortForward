@@ -11,9 +11,6 @@ bash <(curl -Ls https://mirror.ghproxy.com/https://raw.githubusercontent.com/xie
 ```
 ehco隧道入口
 ```
-bash <(curl -Ls https://mirror.ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installc.sh)
+bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installc.sh)
 ```
-crontab -e
-```
-*/1 * * * *  php /usr/local/PortForward/slavec/Port_Checker.php
-```
+
