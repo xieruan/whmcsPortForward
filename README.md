@@ -16,5 +16,6 @@ bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/wh
 
 bbr
 ```
-bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/tcpx.sh)
+wget uone.one/tcpx.sh && bash tcpx.sh
+
 ```
