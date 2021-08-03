@@ -56,7 +56,7 @@ Install() {
 		service firewalld stop
 		systemctl disable firewalld
 		echo -e " ${Tip} 安装主程序..."
-		mkdir /usr/local/PortForward/slave && cd /usr/local/PortForward/slave
+		mkdir /usr/local/PortForward && mkdir /usr/local/PortForward/slave && cd /usr/local/PortForward/slave
 		git clone https://mirror.ghproxy.com/https://github.com/whmcsPF/slavec.git ./
 		cd ..
 		chmod +x -R slave
