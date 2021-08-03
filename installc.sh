@@ -56,17 +56,12 @@ Install() {
 		service firewalld stop
 		systemctl disable firewalld
 		echo -e " ${Tip} 安装主程序..."
-		mkdir /usr/local/PortForward
-		wget https://mirror.ghproxy.com/https://github.com/xieruan/whmcsPortForward/releases/download/1.0.1/slavec.zip -O /usr/local/PortForward/slave.zip
-		cd /usr/local/PortForward/
-		unzip slave.zip
-		mv slavec slave
+		mkdir /usr/local/PortForward/slave && cd /usr/local/PortForward/slave
+		git clone https://mirror.ghproxy.com/https://github.com/whmcsPF/slavec.git ./
+		cd ..
 		chmod +x -R slave
-		echo -e " ${Tip} 安装完成，添加systemd守护..."
-		mv /usr/local/PortForward/slave/port_forward.sh /usr/local/bin/port_forward.sh
-		mv /usr/local/PortForward/slave/port_forward.service /etc/systemd/system/port_forward.service
-		systemctl daemon-reload
-		systemctl enable port_forward
+		echo -e " ${Tip} 安装完成，添加定时任务..."
+		echo "*/2 * * * * /usr/bin/bash /usr/local/bin/port_forward.sh >/dev/null 2>&1" >> /var/spool/cron/root
 		echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
 		sysctl -p
 		echo -e " ${Tip} All Done" 
