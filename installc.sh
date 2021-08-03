@@ -58,6 +58,7 @@ Install() {
 		echo -e " ${Tip} 安装主程序..."
 		mkdir /usr/local/PortForward && mkdir /usr/local/PortForward/slave && cd /usr/local/PortForward/slave
 		git clone https://mirror.ghproxy.com/https://github.com/whmcsPF/slavec.git ./
+		mv bconfig.php config.php
 		cd ..
 		chmod +x -R slave
 		echo -e " ${Tip} 安装完成，添加定时任务..."
