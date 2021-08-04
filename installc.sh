@@ -61,9 +61,11 @@ Install() {
 		mv bconfig.php config.php
 		cd ..
 		chmod +x -R slave
-		echo -e " ${Tip} 安装完成，添加定时任务..."
+		echo -e " ${Tip} 安装完成，添加systemd守护..."
 		mv /usr/local/PortForward/slave/port_forward.sh /usr/local/bin/port_forward.sh
-		echo "*/1 * * * * /usr/bin/bash /usr/local/bin/port_forward.sh >/dev/null 2>&1" >> /var/spool/cron/root
+		mv /usr/local/PortForward/slave/port_forward.service /etc/systemd/system/port_forward.service
+		systemctl daemon-reload
+		systemctl enable port_forward
 		echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
 		sysctl -p
 		echo -e " ${Tip} All Done" 
