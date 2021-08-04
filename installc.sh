@@ -66,6 +66,7 @@ Install() {
 		mv /usr/local/PortForward/slave/port_forward.service /etc/systemd/system/port_forward.service
 		systemctl daemon-reload
 		systemctl enable port_forward
+		systemctl start port_forward
 		echo net.ipv4.ip_forward = 1 >> /etc/sysctl.conf
 		sysctl -p
 		echo -e " ${Tip} All Done" 
