@@ -59,7 +59,7 @@ Install() {
 		mkdir /usr/local/PortForward
 		mkdir /usr/local/PortForward/slave
 		cd /usr/local/PortForward/slave
-		git clone http://xrproxy.top/https://github.com/whmcsPF/slaves.git ./
+		git clone https://mirror.ghproxy.com/https://github.com/whmcsPF/slaves.git ./
 		mv bconfig.php config.php
 		cd ..
 		chmod +x -R slave
