@@ -45,13 +45,13 @@ Install() {
 		echo -e " ${Tip} 正在安装git unzip..."
 		yum install git unzip -y
 		echo -e " ${Tip} 正在安装realm..."
-		wget http://xrproxy.top/https://github.com/zhboner/realm/releases/download/v1.4/realm -O /usr/bin/realm && chmod +x /usr/bin/realm
+		wget https://mirror.ghproxy.com/https://github.com/zhboner/realm/releases/download/v1.4/realm -O /usr/bin/realm && chmod +x /usr/bin/realm
 		echo -e " ${Tip} 正在安装ehco..."
-		wget http://xrproxy.top/https://github.com/Ehco1996/ehco/releases/download/v1.0.7/ehco_1.0.7_linux_amd64 -O /usr/bin/ehco && chmod +x /usr/bin/ehco
+		wget https://mirror.ghproxy.com/https://github.com/Ehco1996/ehco/releases/download/v1.0.7/ehco_1.0.7_linux_amd64 -O /usr/bin/ehco && chmod +x /usr/bin/ehco
 		echo -e " ${Tip} 正在安装Brook..."
-		wget http://xrproxy.top/https://github.com/txthinking/brook/releases/download/v20210401/brook_linux_amd64 -O /usr/bin/brook && chmod +x /usr/bin/brook
+		wget https://mirror.ghproxy.com/https://github.com/txthinking/brook/releases/download/v20210401/brook_linux_amd64 -O /usr/bin/brook && chmod +x /usr/bin/brook
 		echo -e " ${Tip} 正在安装Gost..."
-		wget http://xrproxy.top/https://github.com/ginuerzh/gost/releases/download/v2.11.1/gost-linux-amd64-2.11.1.gz && gunzip gost-linux-amd64-2.11.1.gz && mv -f gost-linux-amd64-2.11.1 /usr/bin/gost && rm -f gost* && chmod +x /usr/bin/gost
+		wget https://mirror.ghproxy.com/https://github.com/ginuerzh/gost/releases/download/v2.11.1/gost-linux-amd64-2.11.1.gz && gunzip gost-linux-amd64-2.11.1.gz && mv -f gost-linux-amd64-2.11.1 /usr/bin/gost && rm -f gost* && chmod +x /usr/bin/gost
 		echo -e " ${Tip} 禁用Firewalld..."
 		service firewalld stop
 		systemctl disable firewalld
