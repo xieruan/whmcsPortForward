@@ -7,7 +7,7 @@ whmcs交流群毛子哥修改的。
 
 安装后端
 ```
-bash <(curl -Lshttps://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installx.sh)
+bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/whmcsPortForward/main/installx.sh)
 ```
 ehco隧道入口
 ```
