@@ -16,5 +16,5 @@ bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xieruan/wh
 
 bbr
 ```
-wget uone.one/tcpx.sh && bash tcpx.sh
+wget -O tcp.sh "https://git.io/coolspeeda" && chmod +x tcp.sh && ./tcp.sh
 ```
